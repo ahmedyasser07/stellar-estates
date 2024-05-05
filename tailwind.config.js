@@ -6,14 +6,14 @@ export default {
   ],
   theme: {
     screens: {
-      'xs' : '375px',
+      'xs': '375px',
 
       'sm': '425px',
       // => @media (min-width: 640px) { ... }
 
       'md': '768px',
       // => @media (min-width: 768px) { ... }
-      
+
       'lg': '1024px',
       // => @media (min-width: 1024px) { ... }
 
@@ -23,7 +23,17 @@ export default {
       '2xl': '1440px',
       // => @media (min-width: 1536px) { ... }
     },
-    extend: {},
+    extend: {
+      animation: {
+        'infinite-scroll': 'infinite-scroll 25s linear infinite',
+      },
+      keyframes: {
+        'infinite-scroll': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-100%)' },
+        }
+      }
+    },
   },
   plugins: [],
 }
