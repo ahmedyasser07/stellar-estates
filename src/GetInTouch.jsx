@@ -55,6 +55,7 @@ const GetInTouch = () => {
         console.log("paylod = ", payload)
     
         try {
+
             const response = await fetch(apiUrl, {
                 method: 'POST',
                 mode: 'no-cors',
@@ -65,6 +66,7 @@ const GetInTouch = () => {
                 body: JSON.stringify(payload)
             });
     
+            console.log("here")
             const result = await response.json();
             console.log('Success:', result);
             alert('Data submitted successfully!');
@@ -109,8 +111,7 @@ const GetInTouch = () => {
                                     type="text"
                                     name="last_name" // Make sure this matches exactly with the state management and logging.
                                     value={data.last_name || ''} // Use || '' to ensure it doesn't show undefined.
-                                    placeholder="Last Name"
-                                    className="..."
+                                    placeholder="Last Name" className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[280px] xl:w-[300px] 2xl:w-[370px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none"
                                     onChange={handleInputChange}
                                 />
                                 </div>
@@ -129,8 +130,7 @@ const GetInTouch = () => {
                             type="text"
                             name="phone_number"
                             value={data.phone_number || ''}
-                            placeholder="Number"
-                            className="..."
+                            placeholder="Number" className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[580px] xl:w-[620px] 2xl:w-[760px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none mr-auto"
                             onChange={handleInputChange}
                         />
                         </div>
