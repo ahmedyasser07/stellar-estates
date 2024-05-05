@@ -48,6 +48,8 @@ const GetInTouch = () => {
             budget: sliderValue * 1000000,
             message: message
         };
+
+        console.log("paylod = ", payload)
     
         try {
             const response = await fetch(apiUrl, {
