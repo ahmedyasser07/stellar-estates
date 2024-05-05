@@ -65,10 +65,6 @@ const GetInTouch = () => {
                 },
                 body: JSON.stringify(payload)
             });
-    
-            console.log("here")
-            const result = await response.json();
-            console.log('Success:', result);
             alert('Data submitted successfully!');
         } catch (error) {
             console.error('Error:', error);
