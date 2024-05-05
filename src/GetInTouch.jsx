@@ -24,7 +24,7 @@ const GetInTouch = () => {
     };
 
     const formatNumberWithCommas = (number) => {
-        return number.toLocaleString(); // Use JavaScript's toLocaleString() method
+        return number.toLocaleString(); 
     };
 
     const handleOptionChange = (event) => {
@@ -35,6 +35,41 @@ const GetInTouch = () => {
         const { name, value } = e.target;
         setData({ ...data, [name]: value });
     };
+
+
+    const handleSubmit = async () => {
+        const apiUrl = 'https://script.google.com/macros/s/AKfycbyELwkO8h9NgyxJEz5MTz5lKUa7dd_w1KkLDGBXV-SJCSii4e7KHEhTIRY22hzJ0axj/exec';
+        const payload = {
+            firstName: data.first_name,
+            lastName: data.last_name,
+            phoneNumber: data.phone_number,
+            interestedIn: data.intrested_in,
+            area: data.area,
+            budget: sliderValue * 1000000,
+            message: message
+        };
+    
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                redirect: 'follow',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            });
+    
+            const result = await response.json();
+            console.log('Success:', result);
+            alert('Data submitted successfully!');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to submit data');
+        }
+    };
+    
+
     return (
         <div className="relative bg-center bg-no-repeat bg-cover text-[black] flex flex-col justify-center md:px-[100px] py-[100px] xl:px-[170px]" style={{ backgroundImage: 'url(./aboutUs1.jpg)' }}>
 
@@ -144,7 +179,7 @@ const GetInTouch = () => {
                             onChange={(e) => setMessage(e.target.value) }
                             placeholder="" className="w-[200px] xs:w-[250px] sm:w-[300px] md:w-[370px] lg:w-[550px] xl:w-[620px] 2xl:w-[750px] h-[400px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none pt-[-200px]"
                         />
-                        <button className="w-[200px] xs:w-[250px] sm:w-[300px] mt-[50px] mx-auto text-[white] bg-[#001b42]">
+                        <button onClick={handleSubmit} className="w-[200px] xs:w-[250px] sm:w-[300px] mt-[50px] mx-auto text-[white] bg-[#001b42]">
                             Submit
                         </button>
                     </div>
