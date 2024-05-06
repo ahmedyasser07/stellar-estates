@@ -28,7 +28,7 @@ const GetInTouch = () => {
     };
 
     const formatNumberWithCommas = (number) => {
-        return number.toLocaleString(); // Use JavaScript's toLocaleString() method
+        return number.toLocaleString(); 
     };
 
     const handleOptionChange = (event) => {
@@ -39,6 +39,44 @@ const GetInTouch = () => {
         const { name, value } = e.target;
         setData({ ...data, [name]: value });
     };
+
+
+    const handleSubmit = async () => {
+        const apiUrl = 'https://script.google.com/macros/s/AKfycbyELwkO8h9NgyxJEz5MTz5lKUa7dd_w1KkLDGBXV-SJCSii4e7KHEhTIRY22hzJ0axj/exec';
+        if(!data.intrested_in || data.intrested_in.trim() === ''){
+            data.intrested_in = 'Buying'
+        }
+        const payload = {
+            firstName: data.first_name,
+            lastName: data.last_name,
+            phoneNumber: data.phone_number,
+            interestedIn: data.intrested_in,
+            area: data.area,
+            budget: sliderValue * 1000000,
+            message: message
+        };
+
+        console.log("paylod = ", payload)
+    
+        try {
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                redirect: 'follow',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            });
+            alert('Data submitted successfully!');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to submit data');
+        }
+    };
+    
+
     return (
         <div className="relative bg-center bg-no-repeat bg-cover text-[black] flex flex-col justify-center md:px-[100px] py-[100px] xl:px-[170px]" style={{ backgroundImage: 'url(./aboutUs1.jpg)' }}>
 
@@ -63,24 +101,38 @@ const GetInTouch = () => {
                                 </div>
                                 <div className="flex flex-col gap-[10px]">
                                     <p className="text-left font-bold">Last Name</p>
-                                    <input
+                                    {/* <input
                                         type="text"
                                         name="last_name"
                                         value={data.last_name}
                                         placeholder="Last Name" className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[280px] xl:w-[300px] 2xl:w-[370px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none"
-                                    />
+                                    /> */}
+                                    <input
+                                    type="text"
+                                    name="last_name" // Make sure this matches exactly with the state management and logging.
+                                    value={data.last_name || ''} // Use || '' to ensure it doesn't show undefined.
+                                    placeholder="Last Name" className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[280px] xl:w-[300px] 2xl:w-[370px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none"
+                                    onChange={handleInputChange}
+                                />
                                 </div>
                             </div>
                         </div>
 
                         <div className="flex flex-col gap-[10px]">
                             <p className="text-left font-bold">Phone Number</p>
-                            <input
+                            {/* <input
                                 type="text"
                                 name="phone_number"
                                 value={data.phone_number}
                                 placeholder="Number" className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[580px] xl:w-[620px] 2xl:w-[760px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none mr-auto"
-                            />
+                            /> */}
+                            <input
+                            type="text"
+                            name="phone_number"
+                            value={data.phone_number || ''}
+                            placeholder="Number" className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[580px] xl:w-[620px] 2xl:w-[760px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none mr-auto"
+                            onChange={handleInputChange}
+                        />
                         </div>
 
                         <div className="flex flex-col mt-[20px]">
@@ -170,7 +222,7 @@ const GetInTouch = () => {
                             onChange={(e) => setMessage(e.target.value)}
                             placeholder="" className="w-[200px] xs:w-[250px] sm:w-[300px] md:w-[370px] lg:w-[550px] xl:w-[620px] 2xl:w-[750px] h-[400px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none pt-[-200px]"
                         />
-                        <button className="w-[200px] xs:w-[250px] sm:w-[300px] mt-[50px] mx-auto text-[white] bg-[#001b42]">
+                        <button onClick={handleSubmit} className="w-[200px] xs:w-[250px] sm:w-[300px] mt-[50px] mx-auto text-[white] bg-[#001b42]">
                             Submit
                         </button>
                     </div>
