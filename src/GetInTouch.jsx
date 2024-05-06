@@ -28,7 +28,7 @@ const GetInTouch = () => {
     };
 
     const formatNumberWithCommas = (number) => {
-        return number.toLocaleString(); 
+        return number.toLocaleString();
     };
 
     const handleOptionChange = (event) => {
@@ -43,7 +43,7 @@ const GetInTouch = () => {
 
     const handleSubmit = async () => {
         const apiUrl = 'https://script.google.com/macros/s/AKfycbyELwkO8h9NgyxJEz5MTz5lKUa7dd_w1KkLDGBXV-SJCSii4e7KHEhTIRY22hzJ0axj/exec';
-        if(!data.intrested_in || data.intrested_in.trim() === ''){
+        if (!data.intrested_in || data.intrested_in.trim() === '') {
             data.intrested_in = 'Buying'
         }
         const payload = {
@@ -57,7 +57,7 @@ const GetInTouch = () => {
         };
 
         console.log("paylod = ", payload)
-    
+
         try {
 
             const response = await fetch(apiUrl, {
@@ -75,7 +75,7 @@ const GetInTouch = () => {
             alert('Failed to submit data');
         }
     };
-    
+
 
     return (
         <div className="relative bg-center bg-no-repeat bg-cover text-[black] flex flex-col justify-center md:px-[100px] py-[100px] xl:px-[170px]" style={{ backgroundImage: 'url(./aboutUs1.jpg)' }}>
@@ -108,12 +108,12 @@ const GetInTouch = () => {
                                         placeholder="Last Name" className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[280px] xl:w-[300px] 2xl:w-[370px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none"
                                     /> */}
                                     <input
-                                    type="text"
-                                    name="last_name" // Make sure this matches exactly with the state management and logging.
-                                    value={data.last_name || ''} // Use || '' to ensure it doesn't show undefined.
-                                    placeholder="Last Name" className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[280px] xl:w-[300px] 2xl:w-[370px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none"
-                                    onChange={handleInputChange}
-                                />
+                                        type="text"
+                                        name="last_name" // Make sure this matches exactly with the state management and logging.
+                                        value={data.last_name || ''} // Use || '' to ensure it doesn't show undefined.
+                                        placeholder="Last Name" className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[280px] xl:w-[300px] 2xl:w-[370px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none"
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -127,12 +127,12 @@ const GetInTouch = () => {
                                 placeholder="Number" className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[580px] xl:w-[620px] 2xl:w-[760px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none mr-auto"
                             /> */}
                             <input
-                            type="text"
-                            name="phone_number"
-                            value={data.phone_number || ''}
-                            placeholder="Number" className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[580px] xl:w-[620px] 2xl:w-[760px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none mr-auto"
-                            onChange={handleInputChange}
-                        />
+                                type="text"
+                                name="phone_number"
+                                value={data.phone_number || ''}
+                                placeholder="Number" className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[580px] xl:w-[620px] 2xl:w-[760px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none mr-auto"
+                                onChange={handleInputChange}
+                            />
                         </div>
 
                         <div className="flex flex-col mt-[20px]">
@@ -184,16 +184,16 @@ const GetInTouch = () => {
                     </div>
                     <div className="mt-[20px]">
                         <p className="text-left font-bold">Budget</p>
-                        <p className="text-[grey] text-4xl text-left my-[10px] font-bold">EGP {formatNumberWithCommas(sliderValue * 1000000)}
+                        <p className="text-[grey] text-4xl text-left my-[10px] pb-[20px] font-bold">EGP {formatNumberWithCommas(sliderValue * 1000000)}
                         </p>
 
-                        <div className="hidden lg:flex lg:flex-row lg:gap-[4.5px] xl:gap-[8.5px] 2xl:gap-[15.5px]">
+                        <div className="hidden lg:flex lg:flex-row relative ml-[0px] pb-[10px]">
                             {
                                 moneyOptions.map(value => (
-                                    <div className="flex flex-col">
-                                        <p className="text-xs">{value}</p>
+                                    <div className="flex flex-col absolute top-[-20px] left-[]" style={{left : `calc(${parseInt(value)}% - 1rem / 2)`}}>
+                                        <p className="text-[10px]">{value}</p>
                                         <div className="flex flex-row justify-center">
-                                            <div className="w-2 h-2 rounded-full bg-gray-300 ml-[5px] my-[5px]"></div>
+                                            <div className="w-2 h-2 rounded-full bg-gray-300 mx-auto my-[5px]"></div>
                                         </div>
                                     </div>
                                 ))
