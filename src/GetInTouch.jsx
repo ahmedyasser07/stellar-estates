@@ -10,7 +10,7 @@ const GetInTouch = () => {
     const [message, setMessage] = useState('')
     const theme = createTheme({
         typography: {
-            "fontFamily": `"Montserrat","sans-serif"`
+            
         }
     })
     // Function to handle changes in the slider value
