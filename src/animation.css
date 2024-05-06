@@ -1,26 +1,29 @@
-  
   @keyframes slide {
     from {
       transform: translateX(0);
     }
+
     to {
       transform: translateX(-100%);
     }
   }
-  
-  .logos {
-  }
+
+  .logos {}
+
   .logos:hover .logos-slide {
     animation-play-state: paused;
   }
-  
+
   .logos-slide {
     display: inline-block;
     animation: 10s slide infinite linear;
   }
-  
+
   .logos-slide img {
     height: 50px;
     margin: 0 40px;
   }
-  
+
+  .font {
+    font-family: "Montserrat", sans-serif;
+  }

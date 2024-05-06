@@ -1,5 +1,5 @@
-import { FormControl, FormControlLabel, FormLabel, RadioGroup, Radio, Slider, useMediaQuery } from "@mui/material";
-
+import { FormControl, FormControlLabel, FormLabel, RadioGroup, Radio, Slider, useMediaQuery, createTheme, ThemeProvider, SliderMarkLabel } from "@mui/material";
+import './animation.css'
 import { useState } from "react"
 
 
@@ -7,12 +7,16 @@ const GetInTouch = () => {
     const [data, setData] = useState({})
     const [selectedOption, setSelectedOption] = useState('');
     const [sliderValue, setSliderValue] = useState(0);
-    const [message , setMessage] = useState('')
-
+    const [message, setMessage] = useState('')
+    const theme = createTheme({
+        typography: {
+            "fontFamily": `"Montserrat","sans-serif"`
+        }
+    })
     // Function to handle changes in the slider value
     const handleSliderChange = (event, newValue) => {
         console.log(newValue)
-        setData({...data,'budget':newValue})
+        setData({ ...data, 'budget': newValue })
         setSliderValue(newValue);
     };
     const [moneyValue, setMoneyValue] = useState(100); // Initial value
@@ -82,18 +86,36 @@ const GetInTouch = () => {
                         <div className="flex flex-col mt-[20px]">
                             <p className="text-left font-bold">Intrested In</p>
                             <div className="mr-auto ml-[10px]">
-                                <FormControl>
-                                    <RadioGroup
-                                        aria-labelledby="demo-radio-buttons-group-label"
-                                        defaultValue="buying"
-                                        name="intrested_in"
-                                        onChange={handleInputChange}
-                                    >
-                                        <FormControlLabel value="buying" control={<Radio style={{ color: 'black', marginTop: '0px' }} />} label="Buying" />
-                                        <FormControlLabel value="selling" control={<Radio style={{ color: 'black' }} />} label="Selling" />
-                                        <FormControlLabel value="renting" control={<Radio style={{ color: 'black' }} />} label="Renting" />
-                                    </RadioGroup>
-                                </FormControl>
+                                <ThemeProvider theme={theme}>
+                                    <FormControl>
+                                        <RadioGroup
+                                            aria-labelledby="demo-radio-buttons-group-label"
+                                            defaultValue="buying"
+                                            name="intrested_in"
+                                            onChange={handleInputChange}
+
+                                        >
+                                            <FormControlLabel
+                                                value="buying"
+                                                control={<Radio style={{ color: 'black', marginTop: '0px' }} />}
+                                                label="Buying"
+                                                style={{ fontFamily: "'Montserrat', sans-serif" }}
+                                            />
+                                            <FormControlLabel
+                                                value="selling"
+                                                control={<Radio style={{ color: 'black' }} />}
+                                                label="Selling"
+                                                style={{ fontFamily: "'Montserrat', sans-serif" }}
+                                            />
+                                            <FormControlLabel
+                                                value="renting"
+                                                control={<Radio style={{ color: 'black' }} />}
+                                                label="Renting"
+                                                className="font"
+                                            />
+                                        </RadioGroup>
+                                    </FormControl>
+                                </ThemeProvider>
                             </div>
                         </div>
 
@@ -110,14 +132,17 @@ const GetInTouch = () => {
                     </div>
                     <div className="mt-[20px]">
                         <p className="text-left font-bold">Budget</p>
-                        <p className="text-[grey] text-4xl text-left my-[10px] font-bold">EGP {formatNumberWithCommas(sliderValue * 1000000)}</p>
+                        <p className="text-[grey] text-4xl text-left my-[10px] font-bold">EGP {formatNumberWithCommas(sliderValue * 1000000)}
+                        </p>
 
-                        <div className="hidden lg:flex lg:flex-row gap-[5px] xl:gap-[9px] 2xl:gap-[15px] ml-[-7px]">
+                        <div className="hidden lg:flex lg:flex-row lg:gap-[4.5px] xl:gap-[8.5px] 2xl:gap-[15.5px]">
                             {
                                 moneyOptions.map(value => (
                                     <div className="flex flex-col">
                                         <p className="text-xs">{value}</p>
-                                        <div className="w-2 h-2 rounded-full bg-gray-300 ml-[5px] my-[5px] mx-auto"></div>
+                                        <div className="flex flex-row justify-center">
+                                            <div className="w-2 h-2 rounded-full bg-gray-300 ml-[5px] my-[5px]"></div>
+                                        </div>
                                     </div>
                                 ))
                             }
@@ -132,16 +157,17 @@ const GetInTouch = () => {
                             step={5}
                             min={0}
                             max={100}
-                            valueLabelDisplay={isSmallScreen ? "auto" : "off"}
+                            marks
                             style={{ color: '#001b42', height: "10px", marginTop: '-10px' }}
                         />
+
                     </div>
                     <div className="flex flex-col">
                         <label className="font-bold text-left mb-[20px]">Tell us what you’re looking for, and we will tailor a plan for you.</label>
                         <input
                             type="text"
                             value={message}
-                            onChange={(e) => setMessage(e.target.value) }
+                            onChange={(e) => setMessage(e.target.value)}
                             placeholder="" className="w-[200px] xs:w-[250px] sm:w-[300px] md:w-[370px] lg:w-[550px] xl:w-[620px] 2xl:w-[750px] h-[400px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none pt-[-200px]"
                         />
                         <button className="w-[200px] xs:w-[250px] sm:w-[300px] mt-[50px] mx-auto text-[white] bg-[#001b42]">
