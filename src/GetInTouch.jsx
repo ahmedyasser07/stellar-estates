@@ -84,7 +84,7 @@ const GetInTouch = () => {
     if (!data.area || data.area.trim() === "") {
         data.area = 0;
     }
-    if (!data.budget || data.budget.trim() === "") {
+    if (!data.budget || data.budget === "") {
         data.budget = 0;
     }
     const payload = {
