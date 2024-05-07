@@ -124,9 +124,9 @@ const GetInTouch = () => {
       <div className="relative z-[3] bg-[white] rounded-lg h-[1500px] md:h-[1350px] w-[90%] md:w-[80%] px-[50px] py-[50px] mx-auto">
         <div className="">
           <div className="pb-[20px]">
-            <h2 className="font-bold text-[30px] text-left">Get In Touch</h2>
+            <h2 className="font-bold text-[30px] text-left">Get In Touch Now!</h2>
             <p className="text-left text-[14px]">
-              Our property consultant will get in contact with you.
+              Please leave your inquiry in the form below and our team of property consultants will take your request and get in touch with you right away.
             </p>
           </div>
           <div>
