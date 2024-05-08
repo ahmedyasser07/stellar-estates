@@ -83,6 +83,7 @@ const GetInTouch = () => {
       console.log("paylod = ", payload);
 
       try {
+        navigate('/confirm')
         const response = await fetch(apiUrl, {
           method: "POST",
           mode: "no-cors",
@@ -92,7 +93,6 @@ const GetInTouch = () => {
           },
           body: JSON.stringify(payload),
         });
-        navigate('/confirm')
 
       } catch (error) {
         console.error("Error:", error);
