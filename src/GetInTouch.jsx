@@ -107,7 +107,7 @@ const GetInTouch = () => {
       className="relative bg-center bg-no-repeat bg-cover text-[black] flex flex-col justify-center md:px-[100px] py-[100px] xl:px-[170px]"
       style={{ backgroundImage: "url(./aboutUs1.jpg)" }}
     >
-      <div className="relative z-[3] bg-[white] rounded-lg h-[1500px] md:h-[1350px] w-[90%] md:w-[80%] px-[50px] py-[50px] mx-auto">
+      <div className="relative z-[3] bg-[white] rounded-lg h-[1600px] md:h-[1350px] w-[90%] md:w-[80%] px-[50px] py-[50px] mx-auto">
         <div className="">
           <div className="pb-[20px]">
             <h2 className="font-bold text-[30px] text-left">Get In Touch Now!</h2>
