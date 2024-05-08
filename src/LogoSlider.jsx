@@ -11,7 +11,7 @@ const LogosSlider = () => {
                     [...logos_1, ...logos_2].map(logo => (
 
                         <li>
-                            <img className="w-16 h-16 md:w-[175px] md:h-[75px]" src={`./logos/${logo}`} alt="Your Image" />
+                            <img className="w-28 h-20 md:w-[175px] md:h-[75px]" src={`./logos/${logo}`} alt="Your Image" />
                         </li>
 
                     ))
@@ -22,7 +22,7 @@ const LogosSlider = () => {
                     [...logos_1, ...logos_2].map(logo => (
 
                         <li>
-                            <img className="w-16 h-16 md:w-[175px] md:h-[75px]" src={`./logos/${logo}`} alt="Your Image" />
+                            <img className="w-28 h-20 md:w-[175px] md:h-[75px]" src={`./logos/${logo}`} alt="Your Image" />
                         </li>
 
                     ))
