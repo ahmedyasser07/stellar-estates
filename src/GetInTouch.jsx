@@ -92,12 +92,12 @@ const GetInTouch = () => {
           },
           body: JSON.stringify(payload),
         });
-        alert("Data submitted successfully!");
+        navigate('/confirm')
+
       } catch (error) {
         console.error("Error:", error);
         alert("Failed to submit data");
       }
-      navigate('/confirm')
     }
     
   };
@@ -286,7 +286,7 @@ const GetInTouch = () => {
             <label hidden={!dataErros.message} className="text-xs text-[red] mr-auto lg:text-md">This field cant be left empty</label>
             <button
               onClick={handleSubmit}
-              className="w-[200px] xs:w-[250px] sm:w-[300px] mt-[50px] mx-auto text-[white] bg-[#001b42]"
+              className="w-[200px] xs:w-[250px] sm:w-[300px] mt-[50px] mx-auto text-[white] bg-[#001b42]  hover:bg-blue-700"
             >
               Submit
             </button>
