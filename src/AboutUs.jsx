@@ -11,7 +11,7 @@ const AboutUs = () => {
             <div className="flex flex-col relative lg:text-left w-full text-center lg:w-[50%] gap-[50px] mt-[130px] overflow-hidden lg:pl-[60px]">
                 <div className="flex flex-col gap-[30px]">
                     <h2 className="text-[#001b42] font-bold text-[30px]">About Us</h2>
-                    <p className="text-[black] w-[75%] text-[27px] mx-auto lg:mx-0">
+                    <p className="text-[#001b42] w-[75%] text-[27px] mx-auto lg:mx-0">
                         The commitment to excellence,
                         integrity, and client-centricity that
                         sets us apart as a leader in the
