@@ -67,25 +67,29 @@ const GetInTouch = () => {
 
   const handleInputChange = (e) => {
     let { name, value } = e.target;
-    if(name === "phone_number" || name === "area"){
-        const inputValue = value;
-        const numericValue = inputValue.replace(/\D/g, ''); // Remove non-numeric characters
-        value = numericValue;
+    if (name === "phone_number" || name === "area") {
+      const inputValue = value;
+      const numericValue = inputValue.replace(/\D/g, ""); // Remove non-numeric characters
+      value = numericValue;
     }
     setData({ ...data, [name]: value });
   };
 
   const handleSubmit = async () => {
     const apiUrl =
-      "https://script.google.com/macros/s/AKfycbyELwkO8h9NgyxJEz5MTz5lKUa7dd_w1KkLDGBXV-SJCSii4e7KHEhTIRY22hzJ0axj/exec";
+      "https://script.google.com/macros/s/AKfycbxtAetXRXk0zt3h67dDrcSdYKCeVvFshVF9x1RKXQmAFotCgHlCB8knauurNaCGZeNk/exec";
     if (!data.intrested_in || data.intrested_in.trim() === "") {
       data.intrested_in = "Buying";
     }
     if (!data.area || data.area.trim() === "") {
-        data.area = 0;
+      data.area = 0;
     }
     if (!data.budget || data.budget === "") {
-        data.budget = 0;
+      data.budget = 0;
+    }
+    if (!data.location || data.location.trim() === "") {
+      alert("Please choose a location.");
+      return;
     }
     const payload = {
       firstName: data.first_name,
@@ -94,6 +98,7 @@ const GetInTouch = () => {
       interestedIn: data.intrested_in,
       area: data.area,
       budget: sliderValue * 1000000,
+      location: data.location,
       message: message,
     };
 
@@ -124,9 +129,13 @@ const GetInTouch = () => {
       <div className="relative z-[3] bg-[white] rounded-lg h-[1500px] md:h-[1350px] w-[90%] md:w-[80%] px-[50px] py-[50px] mx-auto">
         <div className="">
           <div className="pb-[20px]">
-            <h2 className="font-bold text-[30px] text-left">Get In Touch Now!</h2>
+            <h2 className="font-bold text-[30px] text-left">
+              Get In Touch Now!
+            </h2>
             <p className="text-left text-[14px]">
-              Please leave your inquiry in the form below and our team of property consultants will take your request and get in touch with you right away.
+              Please leave your inquiry in the form below and our team of
+              property consultants will take your request and get in touch with
+              you right away.
             </p>
           </div>
           <div>
@@ -145,12 +154,7 @@ const GetInTouch = () => {
                 </div>
                 <div className="flex flex-col gap-[10px]">
                   <p className="text-left font-bold">Last Name</p>
-                  {/* <input
-                                        type="text"
-                                        name="last_name"
-                                        value={data.last_name}
-                                        placeholder="Last Name" className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[280px] xl:w-[300px] 2xl:w-[370px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none"
-                                    /> */}
+
                   <input
                     type="text"
                     name="last_name" // Make sure this matches exactly with the state management and logging.
@@ -164,17 +168,17 @@ const GetInTouch = () => {
             </div>
 
             <div className="flex flex-col gap-[10px]">
-    <p className="text-left font-bold">Phone Number</p>
-    <input
-        type="text"
-        name="phone_number"
-        value={data.phone_number || ""}
-        placeholder="Number"
-        className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[580px] xl:w-[620px] 2xl:w-[760px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none mr-auto"
-        onChange={handleInputChange}
-        pattern="[0-9]*" // Only allows numeric characters
-    />
-</div>
+              <p className="text-left font-bold">Phone Number</p>
+              <input
+                type="text"
+                name="phone_number"
+                value={data.phone_number || ""}
+                placeholder="Number"
+                className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[580px] xl:w-[620px] 2xl:w-[760px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none mr-auto"
+                onChange={handleInputChange}
+                pattern="[0-9]*" // Only allows numeric characters
+              />
+            </div>
 
             <div className="flex flex-col mt-[20px]">
               <p className="text-left font-bold">Intrested In</p>
@@ -221,9 +225,27 @@ const GetInTouch = () => {
               onChange={handleInputChange}
               value={data.area}
               placeholder="180 m"
-              className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[580px] xl:w-[620px] 2xl:w-[760px] h-[50px] rounded-lg border-[2px] border-solid bg-[white]   focus:outline-none pl-[10px]"
+              className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[580px] xl:w-[620px] 2xl:w-[760px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] focus:outline-none pl-[10px]"
             />
+            <select
+              name="location"
+              onChange={handleInputChange}
+              value={data.location}
+              className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[580px] xl:w-[620px] 2xl:w-[760px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] focus:outline-none pl-[10px]"
+            >
+              <option value="" disabled>Select Location</option>
+              <option className="font-bold" value="Al Mustakbal City">Al Mustakbal City</option>
+              <option className="font-bold" value="Ain Al Sokhna">Ain Al Sokhna</option>
+              <option className="font-bold" value="New Cairo">New Cairo</option>
+              <option className="font-bold" value="6th of October">6th of October</option>
+              <option className="font-bold" value="Sheikh Zayed City">Sheikh Zayed City</option>
+              <option className="font-bold" value="New Zayed">New Zayed</option>
+              <option className="font-bold" value="North Coast">North Coast</option>
+              <option className="font-bold" value="El Gouna">El Gouna</option>
+              <option className="font-bold" value="Hurghada">Hurghada</option>
+            </select>
           </div>
+
           <div className="mt-[20px]">
             <p className="text-left font-bold">Budget</p>
             <p className="text-[grey] text-4xl text-left my-[10px] pb-[20px] font-bold">
