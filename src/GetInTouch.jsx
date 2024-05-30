@@ -11,58 +11,29 @@ import {
   SliderMarkLabel,
 } from "@mui/material";
 import "./animation.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const GetInTouch = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({ location: "" });
+  const [dataErros, setDataErrors] = useState({});
   const [selectedOption, setSelectedOption] = useState("");
   const [sliderValue, setSliderValue] = useState(0);
   const [message, setMessage] = useState("");
   const theme = createTheme({
     typography: {},
   });
+  const navigate = useNavigate();
+
   // Function to handle changes in the slider value
   const handleSliderChange = (event, newValue) => {
     console.log(newValue);
     setData({ ...data, budget: newValue });
     setSliderValue(newValue);
   };
-  const [moneyValue, setMoneyValue] = useState(100); // Initial value
-  const moneyOptions = [
-    "0m",
-    "5m",
-    "10m",
-    "15m",
-    "20m",
-    "25m",
-    "30m",
-    "35m",
-    "40m",
-    "45m",
-    "50m",
-    "55m",
-    "60m",
-    "65m",
-    "70m",
-    "75m",
-    "80m",
-    "85m",
-    "90m",
-    "95m",
-    "100m",
-  ];
-  const isSmallScreen = useMediaQuery("(max-width:800px)");
-
-  const handleMoneyChange = (event) => {
-    setMoneyValue(parseInt(event.target.value));
-  };
 
   const formatNumberWithCommas = (number) => {
     return number.toLocaleString();
-  };
-
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
   };
 
   const handleInputChange = (e) => {
@@ -73,60 +44,79 @@ const GetInTouch = () => {
       value = numericValue;
     }
     setData({ ...data, [name]: value });
+    setDataErrors({ ...dataErros, [name]: false });
   };
 
   const handleSubmit = async () => {
-    const apiUrl =
-      "https://script.google.com/macros/s/AKfycbxtAetXRXk0zt3h67dDrcSdYKCeVvFshVF9x1RKXQmAFotCgHlCB8knauurNaCGZeNk/exec";
-    if (!data.intrested_in || data.intrested_in.trim() === "") {
-      data.intrested_in = "Buying";
-    }
-    if (!data.area || data.area.trim() === "") {
-      data.area = 0;
-    }
-    if (!data.budget || data.budget === "") {
-      data.budget = 0;
-    }
-    if (!data.location || data.location.trim() === "") {
-      alert("Please choose a location.");
-      return;
-    }
-    const payload = {
-      firstName: data.first_name,
-      lastName: data.last_name,
-      phoneNumber: data.phone_number,
-      interestedIn: data.intrested_in,
-      area: data.area,
-      budget: sliderValue * 1000000,
-      location: data.location,
-      message: message,
-    };
-
-    console.log("paylod = ", payload);
-
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        mode: "no-cors",
-        redirect: "follow",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+    if (
+      !data.first_name ||
+      !data.last_name ||
+      !data.phone_number ||
+      !data.area ||
+      !data.location || // Check for location
+      !message
+    ) {
+      console.log("here");
+      setDataErrors({
+        first_name: !data.first_name,
+        last_name: !data.last_name,
+        phone_number: !data.phone_number,
+        area: !data.area,
+        location: !data.location, // Set error for location
+        message: !message,
       });
-      alert("Data submitted successfully!");
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Failed to submit data");
+    } else {
+      const apiUrl =
+        "https://script.google.com/macros/s/AKfycbxtAetXRXk0zt3h67dDrcSdYKCeVvFshVF9x1RKXQmAFotCgHlCB8knauurNaCGZeNk/exec";
+      if (!data.intrested_in || data.intrested_in.trim() === "") {
+        data.intrested_in = "Buying";
+      }
+      if (!data.area || data.area.trim() === "") {
+        data.area = 0;
+      }
+      if (!data.budget || data.budget === "") {
+        data.budget = 0;
+      }
+      if (!data.location || data.location.trim() === "") {
+        alert("Please choose a location.");
+        return;
+      }
+      const payload = {
+        firstName: data.first_name,
+        lastName: data.last_name,
+        phoneNumber: data.phone_number,
+        interestedIn: data.intrested_in,
+        area: data.area,
+        budget: sliderValue * 1000000,
+        location: data.location,
+        message: message,
+      };
+
+      console.log("paylod = ", payload);
+
+      try {
+        navigate("/confirm");
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          mode: "no-cors",
+          redirect: "follow",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to submit data");
+      }
     }
   };
-
   return (
     <div
       className="relative bg-center bg-no-repeat bg-cover text-[black] flex flex-col justify-center md:px-[100px] py-[100px] xl:px-[170px]"
       style={{ backgroundImage: "url(./aboutUs1.jpg)" }}
     >
-      <div className="relative z-[3] bg-[white] rounded-lg h-[1500px] md:h-[1350px] w-[90%] md:w-[80%] px-[50px] py-[50px] mx-auto">
+      <div className="relative z-[3] bg-[white] rounded-lg h-[1600px] md:h-[1500px] w-[90%] md:w-[80%] px-[50px] py-[50px] mx-auto">
         <div className="">
           <div className="pb-[20px]">
             <h2 className="font-bold text-[30px] text-left">
@@ -151,6 +141,12 @@ const GetInTouch = () => {
                     className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[280px] xl:w-[300px] 2xl:w-[370px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none"
                     onChange={handleInputChange}
                   />
+                  <label
+                    hidden={!dataErros.first_name}
+                    className="text-xs text-[red] mt-[-10px] mr-auto lg:text-md"
+                  >
+                    This field cant be left empty
+                  </label>
                 </div>
                 <div className="flex flex-col gap-[10px]">
                   <p className="text-left font-bold">Last Name</p>
@@ -163,6 +159,12 @@ const GetInTouch = () => {
                     className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[280px] xl:w-[300px] 2xl:w-[370px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none"
                     onChange={handleInputChange}
                   />
+                  <label
+                    hidden={!dataErros.last_name}
+                    className="text-xs text-[red] mt-[-10px] mr-auto lg:text-md"
+                  >
+                    This field cant be left empty
+                  </label>
                 </div>
               </div>
             </div>
@@ -178,6 +180,12 @@ const GetInTouch = () => {
                 onChange={handleInputChange}
                 pattern="[0-9]*" // Only allows numeric characters
               />
+              <label
+                hidden={!dataErros.phone_number}
+                className="text-xs text-[red] mt-[-10px] mr-auto lg:text-md"
+              >
+                This field cant be left empty
+              </label>
             </div>
 
             <div className="flex flex-col mt-[20px]">
@@ -227,23 +235,65 @@ const GetInTouch = () => {
               placeholder="180 m"
               className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[580px] xl:w-[620px] 2xl:w-[760px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] focus:outline-none pl-[10px]"
             />
+            <label
+              hidden={!dataErros.area}
+              className="text-xs text-[red] mt-[-10px] mr-auto lg:text-md"
+            >
+              This field cant be left empty
+            </label>
+          </div>
+
+          <div className="flex flex-col mt-[30px] gap-[10px]">
+            <p className="text-left font-bold">Location</p>
             <select
               name="location"
               onChange={handleInputChange}
               value={data.location}
               className="w-[200px] xs:w-[270px] sm:w-[300px] md:w-[370px] lg:w-[580px] xl:w-[620px] 2xl:w-[760px] h-[50px] rounded-lg border-[2px] border-solid bg-[white] focus:outline-none pl-[10px]"
             >
-              <option value="" disabled>Select Location</option>
-              <option className="font-bold" value="Al Mustakbal City">Al Mustakbal City</option>
-              <option className="font-bold" value="Ain Al Sokhna">Ain Al Sokhna</option>
-              <option className="font-bold" value="New Cairo">New Cairo</option>
-              <option className="font-bold" value="6th of October">6th of October</option>
-              <option className="font-bold" value="Sheikh Zayed City">Sheikh Zayed City</option>
-              <option className="font-bold" value="New Zayed">New Zayed</option>
-              <option className="font-bold" value="North Coast">North Coast</option>
-              <option className="font-bold" value="El Gouna">El Gouna</option>
-              <option className="font-bold" value="Hurghada">Hurghada</option>
+              <option value="" disabled>
+                Select Location
+              </option>
+              <option className="font-bold" value="Al Mustakbal City">
+                Al Mustakbal City
+              </option>
+              <option className="font-bold" value="Ain Al Sokhna">
+                Ain Al Sokhna
+              </option>
+              <option className="font-bold" value="New Cairo">
+                New Cairo
+              </option>
+              <option className="font-bold" value="6th of October">
+                6th of October
+              </option>
+              <option className="font-bold" value="Sheikh Zayed City">
+                Sheikh Zayed City
+              </option>
+              <option className="font-bold" value="New Zayed">
+                New Zayed
+              </option>
+              <option className="font-bold" value="North Coast">
+                North Coast
+              </option>
+              <option className="font-bold" value="El Gouna">
+                El Gouna
+              </option>
+              <option className="font-bold" value="Hurghada">
+                Hurghada
+              </option>
+              <label
+                hidden={!dataErros.location}
+                className="text-xs text-[red] mt-[-10px] mr-auto lg:text-md"
+              >
+                This field cant be left empty
+              </label>
             </select>
+            <label
+              hidden={!dataErros.location}
+              className="text-xs text-[red] mt-[-10px] mr-auto lg:text-md"
+            >
+              This field cant be left empty
+            </label>
           </div>
 
           <div className="mt-[20px]">
@@ -315,9 +365,15 @@ const GetInTouch = () => {
               placeholder=""
               className="w-[200px] xs:w-[250px] sm:w-[300px] md:w-[370px] lg:w-[550px] xl:w-[620px] 2xl:w-[750px] h-[400px] rounded-lg border-[2px] border-solid bg-[white] pl-[10px] focus:outline-none pt-[-200px]"
             />
+            <label
+              hidden={!dataErros.message}
+              className="text-xs text-[red] mr-auto lg:text-md"
+            >
+              This field cant be left empty
+            </label>
             <button
               onClick={handleSubmit}
-              className="w-[200px] xs:w-[250px] sm:w-[300px] mt-[50px] mx-auto text-[white] bg-[#001b42]"
+              className="w-[200px] xs:w-[250px] sm:w-[300px] mt-[50px] mx-auto text-[white] bg-[#001b42]  hover:bg-blue-700"
             >
               Submit
             </button>
