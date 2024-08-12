@@ -7,7 +7,7 @@ import LogosSlider from './LogoSlider'
 import ConfirmationPage from './ConfirmationPage'
 import { Route, Routes } from 'react-router-dom'
 import Land from './land'
-function App() {
+function App2() {
   const [count, setCount] = useState(0)
 
   return (
@@ -19,4 +19,4 @@ function App() {
   )
 }
 
-export default App
+export default App2
